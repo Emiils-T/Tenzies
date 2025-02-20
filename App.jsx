@@ -1,14 +1,11 @@
 import Die from "./Die";
-import { useState } from "react";
+import { useState , useEffect ,useRef  } from "react";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
-import { useRef } from "react";
 export default function App() {
   const [dice, setDice] = useState(() => generateNewDice());
-  /**
-   * Challenge: Allow the user to play a new game when the
-   * button is clicked
-   */
+     
+  const buttonReference = useRef(null)
 
   let gameWon =
     dice.every((die) => die.isHeld) &&
@@ -21,6 +18,12 @@ export default function App() {
       })
     );
   }
+
+  useEffect(() =>{
+    if(gameWon){
+      buttonReference.current.focus()
+    }
+  },[gameWon])
 
   const diceElements = dice.map((diceObj) => (
     <Die
@@ -79,7 +82,7 @@ export default function App() {
       </p>
       <div className="dice-container">{diceElements}</div>
 
-      <button className="reroll" onClick={reroll}>
+      <button className="reroll" onClick={reroll} ref={buttonReference}>
         {gameWon ? "New Game" : "Reroll"}
       </button>
       </main>
