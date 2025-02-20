@@ -82,6 +82,6 @@ export default function App() {
       <button className="reroll" onClick={reroll}>
         {gameWon ? "New Game" : "Reroll"}
       </button>
-    </main>
-  );
-}
+      </main>
+        )
+      }
